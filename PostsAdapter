@@ -1,0 +1,61 @@
+package com.example.recycler.adapters;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+import com.example.recycler.R;
+import com.example.recycler.model.Posts;
+
+public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+
+    private List<Posts> dados;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View view;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.view = itemView;
+        }
+    }
+
+
+    public PostsAdapter(List<Posts> posts) {
+        this.dados = posts;
+    }
+
+    @NonNull
+    @Override
+    public PostsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ViewGroup viewGroup;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.posts_layout, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PostsAdapter.ViewHolder holder, int position) {
+        Posts posts = dados.get(position);
+        TextView tv = holder.view.findViewById(R.id.tvPostsTitulo);
+        tv.setText("Titulo Posts: "+posts.getTitle());
+        tv = holder.view.findViewById(R.id.tvPostsIdUser);
+        tv.setText("Id Posts: "+posts.getUser_id());
+        tv = holder.view.findViewById(R.id.tvPostsBody);
+        tv.setText("Body Posts: "+posts.getBody());
+        Switch sw = holder.view.findViewById(R.id.swPostsCompleto);
+        sw.setChecked(posts.isCompleted());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return dados.size();
+    }
+}
